@@ -11,6 +11,7 @@ import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import java.util.*
 import android.R as AR
 
 class MainActivity : AppCompatActivity() {
@@ -56,9 +57,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        val timestamp = Date().time;
+        val hash = Utils.md5(timestamp.toString()+BuildConfig.MARVEL_PRIVATE_KEY+BuildConfig.MARVEL_PUBLIC_KEY)
+        Log.e(MainActivity::class.java.simpleName, hash)
 
         manageSub(
-                service.getCharacters("1457563230", "a4734679191fb19cf3573a65926dd720", "03b8b27175b7c3d2e7e732f3d464e87b")
+                service.getCharacters(timestamp.toString(), BuildConfig.MARVEL_PUBLIC_KEY, hash)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe( { c -> endCallProgress("Characters number: ${c.data.count} Copyright: ${c.attributionText}",
