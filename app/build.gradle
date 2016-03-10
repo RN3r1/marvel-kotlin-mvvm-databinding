@@ -40,8 +40,13 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     kapt 'com.android.databinding:compiler:2.0.0-beta6'
 
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'com.jakewharton.rxbinding:rxbinding-kotlin:0.3.0'
+
     compile'com.google.code.gson:gson:2.4'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    compile 'com.squareup.okhttp:logging-interceptor:2.6.0'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
     compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
 }
