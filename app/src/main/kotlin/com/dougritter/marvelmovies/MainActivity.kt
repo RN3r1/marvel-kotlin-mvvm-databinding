@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -15,7 +14,6 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var service: MarvelService
-
     private var _compoSub = CompositeSubscription()
     private val compoSub: CompositeSubscription
         get() {
@@ -40,15 +38,9 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
-    fun endCallProgress(cResponse: Model.CharacterResponse?, m : String, length: Int) {
-        Toast.makeText(this, m, length).show()
-        Log.e(MainActivity::class.java.simpleName, "progress finished: "+m)
-
-        if (cResponse != null) {
-            charactersList(cResponse)
-
-            val characterViewModel: ViewModel.CharacterViewModel = ViewModel.CharacterViewModel(this, cResponse.data.results[0])
-            Log.e(MainActivity::class.java.simpleName, "ViewModel: "+characterViewModel.model.name)
+    fun endCallProgress(response: Model.CharacterResponse?, m: String) {
+        if (response != null) {
+            charactersList(response)
 
         }
     }
@@ -67,15 +59,12 @@ class MainActivity : AppCompatActivity() {
                 service.getCharacters(timestamp.toString(), BuildConfig.MARVEL_PUBLIC_KEY, hash)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe( { c -> endCallProgress(c, "Characters number: ${c.data.count} Copyright: ${c.attributionText}",
-                                Toast.LENGTH_SHORT)},
-                                { e -> endCallProgress(null, e.message?:"Unknown error happened during getting characters",
-                                        Toast.LENGTH_LONG)
+                        .subscribe( { c -> endCallProgress(c, "Characters number: ${c.data.count} Copyright: ${c.attributionText}")},
+                                { e -> endCallProgress(null, e.message?:"Unknown error happened during getting characters")
                                 Log.e(MainActivity::class.java.simpleName, e.message)})
         )
 
         startCallProgress()
-
 
     }
 
