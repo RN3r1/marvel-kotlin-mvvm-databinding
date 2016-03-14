@@ -1,6 +1,6 @@
+package com.dougritter.marvelmovies
 
 object Model {
-
     data class CharacterResponse(val code: Int, val status: String, val copyright: String,
                                  val attributionText: String, val attributionHTML: String,
                                  val etag: String, val data: CharacterData)
@@ -26,3 +26,4 @@ object Model {
     data class ItemUrl(val type: String, val url: String)
 
 }
+
