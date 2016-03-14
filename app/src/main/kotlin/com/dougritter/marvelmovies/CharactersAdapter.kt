@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.dougritter.marvelmovies.databinding.ItemCharacterBinding
 
-class CharactersAdapter(val characterResponse: Model.CharacterResponse) : RecyclerView.Adapter<CharactersAdapter.ItemCharacterViewHolder>() {
+class CharactersAdapter(var characterResponse: Model.CharacterResponse) : RecyclerView.Adapter<CharactersAdapter.ItemCharacterViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemCharacterViewHolder {
         val itemCharacterBinding = DataBindingUtil.inflate<ItemCharacterBinding>(LayoutInflater.from(parent.context), R.layout.item_character, parent, false)
@@ -20,6 +20,18 @@ class CharactersAdapter(val characterResponse: Model.CharacterResponse) : Recycl
     }
 
     override fun getItemCount() = characterResponse.data.results.size
+
+    fun addCharacters(characters: List<Model.Character>) {
+        val initPosition = getItemCount() - 1
+
+        /*notif
+
+        geti.removeAt(initPosition)
+        notifyItemRemoved(initPosition)
+        items.addAll(news)
+        items.add(loadingItem)
+        notifyItemRangeChanged(initPosition, items.size + 1 *//* plus loading item *//*)*/
+    }
 
     class ItemCharacterViewHolder(val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.cardView) {
         fun bindItemCharacter(character: Model.Character) {

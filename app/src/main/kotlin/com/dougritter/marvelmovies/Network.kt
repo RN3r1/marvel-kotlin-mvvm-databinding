@@ -17,9 +17,9 @@ interface MarvelService {
     @GET("/v1/public/characters")
     public fun getCharacters(@Query("ts") ts: String,
                              @Query("apikey") apiKey: String,
-                             @Query("hash") hash: String)
+                             @Query("hash") hash: String,
+                             @Query("limit") limit: Int)
             : Observable<Model.CharacterResponse>
-
 
     companion object {
         fun create() : MarvelService {

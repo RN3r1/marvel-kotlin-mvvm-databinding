@@ -12,4 +12,5 @@ References:
 https://github.com/JetBrains/kotlin-examples
 https://www.ykode.com/2015/10/25/android-rxjava-kotlin-retrofit.html
 https://docs.google.com/document/d/1ReS3ep-hjxWA8kZi0YqDbEhCqTt29hG8P44aA9W0DM8/edit?hl=en&forcehl=1
+https://medium.com/@juanchosaravia/learn-kotlin-while-developing-an-android-app-introduction-567e21ff9664#.8gp7z0t3h
 http://blog.engineer.adways.net/archives/47710400.html (thanks to google translate jp-en)
