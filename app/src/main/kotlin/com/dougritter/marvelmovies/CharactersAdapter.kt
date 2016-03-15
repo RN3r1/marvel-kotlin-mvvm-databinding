@@ -23,17 +23,9 @@ class CharactersAdapter(var characterResponse: Model.CharacterResponse) : Recycl
 
     class ItemCharacterViewHolder(val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.cardView) {
         fun bindItemCharacter(character: Model.Character) {
-            binding.viewmodel = ViewModel.CharacterViewModel(itemView.context, character)
-
-            // COMMENTED BECAUSE THE VIEW WAS RECYCLING AND THE IMAGE WAS NOT LOADING AGAIN
-            // NEED TO FIX LATER
-            /*if (binding.viewmodel == null) {
-                binding.viewmodel = ViewModel.CharacterViewModel(itemView.context, character)
-            } else {
-                var charc: ViewModel.CharacterViewModel = binding.viewmodel
-                charc.model = character
-                binding.viewmodel = ViewModel.CharacterViewModel(itemView.context, character)
-            }*/
+            var viewmodel = ViewModel.CharacterViewModel(itemView.context, character)
+            binding.cardView.setOnClickListener({ viewmodel.openDetailActivity() })
+            binding.viewmodel = viewmodel
 
         }
 

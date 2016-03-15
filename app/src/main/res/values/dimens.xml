@@ -10,4 +10,7 @@
     <dimen name="card_character_height">158dp</dimen>
     <dimen name="card_character_title_text_size">17sp</dimen>
 
+    <dimen name="character_detail_height">430dp</dimen>
+    <dimen name="character_detail_mask">160dp</dimen>
+
 </resources>

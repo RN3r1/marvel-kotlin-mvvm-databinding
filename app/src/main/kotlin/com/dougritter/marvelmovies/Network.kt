@@ -21,6 +21,15 @@ interface MarvelService {
                              @Query("limit") limit: Int)
             : Observable<Model.CharacterResponse>
 
+    @Headers("Accept: */*")
+    @GET("/v1/public/characters/{id}")
+    public fun getCharacterDetail(@Path("id") id: String,
+                                  @Query("ts") ts: String,
+                                 @Query("apikey") apiKey: String,
+                                 @Query("hash") hash: String)
+            : Observable<Model.CharacterResponse>
+
+
     companion object {
         fun create() : MarvelService {
             val gsonBuilder = GsonBuilder()

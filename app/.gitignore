@@ -27,6 +27,7 @@ build/
 
 # Gradle files
 .gradle/
+gradle.properties
 
 # Intellij files
 .idea/

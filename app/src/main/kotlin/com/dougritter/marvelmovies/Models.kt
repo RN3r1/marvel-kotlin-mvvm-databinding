@@ -1,5 +1,7 @@
 package com.dougritter.marvelmovies
 
+import java.io.Serializable
+
 object Model {
     data class CharacterResponse(val code: Int, val status: String, val copyright: String,
                                  val attributionText: String, val attributionHTML: String,
@@ -8,13 +10,16 @@ object Model {
     data class CharacterData(val offset: Int, val limit: Int, val total: Int, val count: Int,
                              var results: MutableList<Character>)
 
-    data class Character(val id: Int, val name: String, val description: String,
-                         val modified: String, val thumbnail: Thumbnail,
+    data class Character(val id: Int, val name: String,
+                         val description: String,
+                         val modified: String,
+                         val thumbnail: Thumbnail,
+                         val resourceURI: String,
                          val comics: CollectionItem,
                          val series: CollectionItem,
                          val stories: CollectionItem,
                          val events: CollectionItem,
-                         val urls: MutableList<ItemUrl>)
+                         val urls: MutableList<ItemUrl>) : Serializable
 
     data class Thumbnail(val path: String, val extension: String)
 
