@@ -21,18 +21,6 @@ class CharactersAdapter(var characterResponse: Model.CharacterResponse) : Recycl
 
     override fun getItemCount() = characterResponse.data.results.size
 
-    fun addCharacters(characters: List<Model.Character>) {
-        val initPosition = getItemCount() - 1
-
-        /*notif
-
-        geti.removeAt(initPosition)
-        notifyItemRemoved(initPosition)
-        items.addAll(news)
-        items.add(loadingItem)
-        notifyItemRangeChanged(initPosition, items.size + 1 *//* plus loading item *//*)*/
-    }
-
     class ItemCharacterViewHolder(val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.cardView) {
         fun bindItemCharacter(character: Model.Character) {
             binding.viewmodel = ViewModel.CharacterViewModel(itemView.context, character)

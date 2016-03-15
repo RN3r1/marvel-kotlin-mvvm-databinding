@@ -6,7 +6,7 @@ object Model {
                                  val etag: String, val data: CharacterData)
 
     data class CharacterData(val offset: Int, val limit: Int, val total: Int, val count: Int,
-                             val results: MutableList<Character>)
+                             var results: MutableList<Character>)
 
     data class Character(val id: Int, val name: String, val description: String,
                          val modified: String, val thumbnail: Thumbnail,
