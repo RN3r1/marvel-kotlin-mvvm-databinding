@@ -7,14 +7,13 @@ import android.support.v7.widget.SearchView
 import android.util.Log
 import android.widget.ImageView
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main.*
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import utils.Utils
 import java.util.*
 
 object ViewModel {
@@ -127,7 +126,7 @@ object ViewModel {
             )
         }
 
-        public fun updateIndexesForRequests(adapter: CharactersAdapter, response: Model.CharacterResponse) {
+        fun updateIndexesForRequests(adapter: CharactersAdapter, response: Model.CharacterResponse) {
             adapter.characterResponse = response
             adapter.notifyItemRangeChanged(countLimit, countLimit + defaultLimit)
             originalList = response.data.results

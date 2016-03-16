@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import com.dougritter.marvelmovies.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import utils.Utils
 
 class MainActivity : AppCompatActivity(), ViewModel.MainViewModel.MainActivityViewModel {
 
@@ -18,7 +19,6 @@ class MainActivity : AppCompatActivity(), ViewModel.MainViewModel.MainActivityVi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         var binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mainViewModel = ViewModel.MainViewModel(this)
         binding.viewmodel = mainViewModel
@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity(), ViewModel.MainViewModel.MainActivityVi
             println("Error: " + any.message)
         } else if (any is Model.CharacterResponse) {
             charactersList(any)
-            println("response "+ any.data.results[0].name)
         }
     }
 

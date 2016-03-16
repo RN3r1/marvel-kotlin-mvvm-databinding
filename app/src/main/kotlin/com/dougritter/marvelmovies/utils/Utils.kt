@@ -1,5 +1,8 @@
+package utils
+
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 object Utils {
@@ -7,7 +10,7 @@ object Utils {
         val MD5 = "MD5"
 
         try {
-            val digest = java.security.MessageDigest.getInstance(MD5)
+            val digest = MessageDigest.getInstance(MD5)
             digest.update(stringToHash.toByteArray())
             val messageDigest = digest.digest()
 
