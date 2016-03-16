@@ -193,7 +193,11 @@ object ViewModel {
 
     }
 
-    class CollectionItemViewModel(context: Context, model: Model.CollectionItem) {
+    class CollectionItemViewModel(val context: Context, var model: Model.CollectionItem) {
+
+    }
+
+    class MarvelItemViewModel(val context: Context, var model: Model.Item) {
 
     }
 

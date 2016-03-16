@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <variable
+            name="viewmodel"
+            type="com.dougritter.marvelmovies.ViewModel.CollectionItemViewModel" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,6 +23,7 @@
 
         <android.support.v4.view.ViewPager
             android:layout_below="@id/collectionTitle"
+            android:id="@+id/collectionPager"
             android:layout_marginTop="@dimen/app_margin_default_min"
             android:background="#dedede"
             android:layout_width="match_parent"

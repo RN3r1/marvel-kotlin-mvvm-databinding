@@ -35,8 +35,8 @@ class DetailActivity : AppCompatActivity(), ViewModel.CharacterDetailViewModel.D
         }
     }
 
-    fun testAddSubView(list: Model.CollectionItem) {
-        dynamicItems.addView(CollectionView(this, list))
+    fun testAddSubView(collectionItem: Model.CollectionItem) {
+        dynamicItems.addView(CollectionView(this, ViewModel.CollectionItemViewModel(this, collectionItem), supportFragmentManager))
     }
 
     override fun onDestroy() {

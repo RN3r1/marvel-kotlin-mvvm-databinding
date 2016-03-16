@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.dougritter.marvelmovies.ViewModel.CollectionItemViewModel"/>
+            type="com.dougritter.marvelmovies.ViewModel.MarvelItemViewModel"/>
 
     </data>
 
@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/itemName"
-            android:text="Item Name"
+            android:text="@{viewmodel.model.name}"
             android:gravity="center"
             android:layout_marginBottom="@dimen/app_margin_default"
             android:layout_marginLeft="@dimen/app_margin_default"
