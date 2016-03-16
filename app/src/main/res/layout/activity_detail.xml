@@ -23,8 +23,6 @@
             android:background="#000"
             tools:context="DetailActivity">
 
-
-
             <ImageView
                 android:id="@+id/characterImage"
                 android:scaleType="fitXY"

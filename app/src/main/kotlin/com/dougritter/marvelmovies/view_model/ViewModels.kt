@@ -193,4 +193,8 @@ object ViewModel {
 
     }
 
+    class CollectionItemViewModel(context: Context, model: Model.CollectionItem) {
+
+    }
+
 }

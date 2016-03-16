@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.dougritter.marvelmovies.databinding.ActivityDetailBinding
+import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity(), ViewModel.CharacterDetailViewModel.DetailViewModel {
 
@@ -30,7 +31,12 @@ class DetailActivity : AppCompatActivity(), ViewModel.CharacterDetailViewModel.D
             println("Error: " + any.message)
         } else if (any is Model.CharacterResponse) {
             println("response "+ any.data.results[0].name)
+            testAddSubView(any.data.results[0].comics)
         }
+    }
+
+    fun testAddSubView(list: Model.CollectionItem) {
+        dynamicItems.addView(CollectionView(this, list))
     }
 
     override fun onDestroy() {
