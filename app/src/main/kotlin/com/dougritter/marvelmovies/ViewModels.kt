@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.ImageView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -41,11 +42,18 @@ object ViewModel {
         }
     }
 
-    class CharacterDetailViewModel(val context: Context, var model: Model.Character) {
+    class CharacterDetailViewModel(val context: Context, var intent: Intent) {
 
-        companion object {
-            val IMAGE_TYPE = "/standard_fantastic."
+        lateinit var service: MarvelService
+        lateinit var model: Model.Character
+        companion object { val IMAGE_TYPE = "/standard_fantastic." }
+
+        init {
+            val characterType = object : TypeToken<Model.Character>() {}.type
+            model = Gson().fromJson<Model.Character>(intent.getStringExtra(DetailActivity.MODEL_EXTRA), characterType)
         }
+
+        interface DetailViewModel { fun endCallProgress(any: Any?) }
 
         var detailImageUrl = detailImageUrl()
 
@@ -59,7 +67,6 @@ object ViewModel {
             }
         }
 
-        lateinit var service: MarvelService
         private var _compoSub = CompositeSubscription()
         private val compoSub: CompositeSubscription
             get() {
@@ -73,9 +80,8 @@ object ViewModel {
 
         fun unsubscribe() { compoSub.unsubscribe() }
 
-        fun loadCharacter(context: Context) {
+        fun loadCharacter(callback: DetailViewModel) {
             service = MarvelService.create()
-
             val timestamp = Date().time;
             val hash = Utils.md5(timestamp.toString()+BuildConfig.MARVEL_PRIVATE_KEY+BuildConfig.MARVEL_PUBLIC_KEY)
 
@@ -83,8 +89,8 @@ object ViewModel {
                     service.getCharacterDetail(model.id.toString(), timestamp.toString(), BuildConfig.MARVEL_PUBLIC_KEY, hash)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe( { c -> (context as DetailActivity).endCallProgress(c)},
-                                    { e -> (context as DetailActivity).endCallProgress(e)
+                            .subscribe( { c -> callback.endCallProgress(c)},
+                                    { e -> callback.endCallProgress(e)
                                         Log.e(DetailActivity::class.java.simpleName, e.message)})
             )
 

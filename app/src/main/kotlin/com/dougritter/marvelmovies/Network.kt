@@ -29,8 +29,9 @@ interface MarvelService {
                                  @Query("hash") hash: String)
             : Observable<Model.CharacterResponse>
 
-
     companion object {
+        private val BASE_URL = "http://gateway.marvel.com"
+
         fun create() : MarvelService {
             val gsonBuilder = GsonBuilder()
 
@@ -41,7 +42,7 @@ interface MarvelService {
             client.interceptors().add(loggingInterceptor)
 
             val restAdapter = Retrofit.Builder()
-                    .baseUrl("http://gateway.marvel.com")
+                    .baseUrl(BASE_URL)
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
                     .client(client)

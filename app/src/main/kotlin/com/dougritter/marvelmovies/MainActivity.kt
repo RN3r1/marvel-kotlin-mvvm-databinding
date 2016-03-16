@@ -10,7 +10,6 @@ import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
-import com.dougritter.marvelmovies.databinding.ActivityDetailBinding
 import com.dougritter.marvelmovies.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import rx.Subscription

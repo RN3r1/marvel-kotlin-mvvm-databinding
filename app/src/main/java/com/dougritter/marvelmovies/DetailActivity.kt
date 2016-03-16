@@ -3,13 +3,9 @@ package com.dougritter.marvelmovies
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.dougritter.marvelmovies.databinding.ActivityDetailBinding
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_detail.*
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), ViewModel.CharacterDetailViewModel.DetailViewModel {
 
     companion object { val MODEL_EXTRA = "model" }
 
@@ -22,22 +18,19 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val characterType = object : TypeToken<Model.Character>() {}.type
-        val model = Gson().fromJson<Model.Character>(intent.getStringExtra(MODEL_EXTRA), characterType)
-
-        detailViewModel = ViewModel.CharacterDetailViewModel(this, model)
+        detailViewModel = ViewModel.CharacterDetailViewModel(this, intent)
         detailViewModel.loadCharacter(this)
 
         binding.viewmodel = detailViewModel
 
     }
 
-    fun endCallProgress(response: Model.CharacterResponse?) {
-        println("response "+ response!!.data.results[0].name)
-    }
-
-    fun endCallProgress(error: Throwable) {
-        Log.e(DetailActivity::class.java.simpleName, error.message)
+    override fun endCallProgress(any: Any?) {
+        if (any is Throwable) {
+            println("Error: " + any.message)
+        } else if (any is Model.CharacterResponse) {
+            println("response "+ any.data.results[0].name)
+        }
     }
 
     override fun onDestroy() {
