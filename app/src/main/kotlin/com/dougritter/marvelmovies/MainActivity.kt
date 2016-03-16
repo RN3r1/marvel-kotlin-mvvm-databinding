@@ -1,5 +1,6 @@
 package com.dougritter.marvelmovies
 
+import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
@@ -9,6 +10,8 @@ import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import com.dougritter.marvelmovies.databinding.ActivityDetailBinding
+import com.dougritter.marvelmovies.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -35,7 +38,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        var binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setSupportActionBar(binding.toolbar)
+
         service = MarvelService.create()
         val linearLayout = LinearLayoutManager(this)
         recyclerView.layoutManager = linearLayout

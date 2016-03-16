@@ -1,14 +1,11 @@
 package com.dougritter.marvelmovies
 
 import android.databinding.DataBindingUtil
-import android.databinding.tool.DataBinder
-import android.databinding.tool.writer.LayoutBinderWriter
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.dougritter.marvelmovies.databinding.ActivityDetailBinding
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -22,6 +19,9 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         var binding: ActivityDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
 
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val characterType = object : TypeToken<Model.Character>() {}.type
         val model = Gson().fromJson<Model.Character>(intent.getStringExtra(MODEL_EXTRA), characterType)
 
@@ -29,7 +29,6 @@ class DetailActivity : AppCompatActivity() {
         detailViewModel.loadCharacter(this)
 
         binding.viewmodel = detailViewModel
-
 
     }
 
@@ -40,7 +39,6 @@ class DetailActivity : AppCompatActivity() {
     fun endCallProgress(error: Throwable) {
         Log.e(DetailActivity::class.java.simpleName, error.message)
     }
-
 
     override fun onDestroy() {
         detailViewModel.unsubscribe()
