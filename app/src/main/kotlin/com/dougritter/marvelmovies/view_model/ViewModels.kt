@@ -3,6 +3,7 @@ package com.dougritter.marvelmovies
 import android.content.Context
 import android.content.Intent
 import android.databinding.*
+import android.os.Bundle
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.widget.ImageView
@@ -198,7 +199,18 @@ object ViewModel {
     }
 
     class MarvelItemViewModel(val context: Context, var model: Model.Item) {
+        companion object {
+            fun putBundleArgs(model: Model.Item): Bundle {
+                val args = Bundle()
+                args.putString(DetailActivity.MODEL_EXTRA, Gson().toJson(model))
+                return args
+            }
 
+            fun getModelFromBundle(args: Bundle): Model.Item {
+                val itemType = object : TypeToken<Model.Item>() {}.type
+                return Gson().fromJson<Model.Item>(args.getString(DetailActivity.MODEL_EXTRA), itemType)
+            }
+        }
     }
 
 }
