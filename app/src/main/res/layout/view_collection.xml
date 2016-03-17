@@ -8,11 +8,11 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                  android:layout_width="match_parent"
-                 android:layout_height="match_parent">
+                 android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/collectionTitle"
-            tools:text="Comics"
+            tools:text="@{viewmodel.title}"
             android:textSize="@dimen/card_character_title_text_size"
             android:textColor="#f00"
             android:layout_marginBottom="@dimen/app_margin_default"

@@ -7,6 +7,27 @@ object Model {
                                  val attributionText: String, val attributionHTML: String,
                                  val etag: String, val data: CharacterData)
 
+    data class DetailResponse(val code: Int, val status: String, val copyright: String,
+                                 val attributionText: String, val attributionHTML: String,
+                                 val etag: String, val data: CharacterDetailData)
+
+    data class CharacterDetailData(val offset: Int, val limit: Int, val total: Int, val count: Int,
+                             var results: MutableList<Detail>)
+
+
+    data class Detail(val id: Int, val digitalId: String,
+                     val title: String,
+                     val issueNumber: String,
+                     val variantDescription: String,
+                     val description: String,
+                     val isbn: String,
+                     val fromat: String,
+                     val resourceURI: String,
+                     val thumbnail: Thumbnail,
+                      val images: MutableList<Thumbnail>,
+                      val urls: MutableList<ItemUrl>) : Serializable
+
+
     data class CharacterData(val offset: Int, val limit: Int, val total: Int, val count: Int,
                              var results: MutableList<Character>)
 

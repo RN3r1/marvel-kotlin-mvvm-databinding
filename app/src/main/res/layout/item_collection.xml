@@ -13,13 +13,22 @@
 
         <TextView
             android:id="@+id/itemName"
-            android:text="@{viewmodel.model.name}"
+            android:text="@{viewmodel.detailModel.title}"
             android:gravity="center"
+            android:textColor="#000"
             android:layout_marginBottom="@dimen/app_margin_default"
             android:layout_marginLeft="@dimen/app_margin_default"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_above="@id/itemName"
+            android:padding="@dimen/app_margin_default_min"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
 
     </RelativeLayout>
 

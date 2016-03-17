@@ -23,6 +23,7 @@ class DetailActivity : AppCompatActivity(), ViewModel.CharacterDetailViewModel.D
         detailViewModel.loadCharacter(this)
 
         binding.viewmodel = detailViewModel
+        detailViewModel.loadCollectionViews(binding.dynamicItems, binding.dynamicItemsSeries, supportFragmentManager)
 
     }
 
@@ -31,12 +32,7 @@ class DetailActivity : AppCompatActivity(), ViewModel.CharacterDetailViewModel.D
             println("Error: " + any.message)
         } else if (any is Model.CharacterResponse) {
             println("response "+ any.data.results[0].name)
-            testAddSubView(any.data.results[0].comics)
         }
-    }
-
-    fun testAddSubView(collectionItem: Model.CollectionItem) {
-        dynamicItems.addView(CollectionView(this, ViewModel.CollectionItemViewModel(this, collectionItem), supportFragmentManager))
     }
 
     override fun onDestroy() {

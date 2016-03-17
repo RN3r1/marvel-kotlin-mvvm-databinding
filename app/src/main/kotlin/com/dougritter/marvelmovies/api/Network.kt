@@ -25,12 +25,22 @@ interface MarvelService {
     @GET("/v1/public/characters/{id}")
     public fun getCharacterDetail(@Path("id") id: String,
                                   @Query("ts") ts: String,
-                                 @Query("apikey") apiKey: String,
-                                 @Query("hash") hash: String)
+                                  @Query("apikey") apiKey: String,
+                                  @Query("hash") hash: String)
             : Observable<Model.CharacterResponse>
 
+    @Headers("Accept: */*")
+    @GET("/v1/public/{type}/{id}")
+    public fun getDetail(@Path("type") type: String,
+                         @Path("id") id: String,
+                         @Query("ts") ts: String,
+                         @Query("apikey") apiKey: String,
+                         @Query("hash") hash: String)
+            : Observable<Model.DetailResponse>
+
     companion object {
-        private val BASE_URL = "http://gateway.marvel.com"
+        val BASE_URL = "http://gateway.marvel.com"
+        val API_URL = "/v1/public/"
 
         fun create() : MarvelService {
             val gsonBuilder = GsonBuilder()

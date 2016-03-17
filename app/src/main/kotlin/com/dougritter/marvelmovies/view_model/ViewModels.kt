@@ -4,9 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.*
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 import android.support.v7.widget.SearchView
 import android.util.Log
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
@@ -192,13 +195,36 @@ object ViewModel {
         }
 
 
+        fun loadCollectionViews(view: LinearLayout, viewSeries: LinearLayout, fm: FragmentManager) {
+            if (model.comics?.items.size != 0) {
+                view.addView(CollectionView(context, model.comics, fm, context.getString(R.string.collection_item_comics_title)))
+            }
+            if (model?.series?.items.size != 0) {
+                viewSeries.addView(CollectionView(context, model.series, fm, context.getString(R.string.collection_item_series_title)))
+            }
+            if (model?.stories?.items.size != 0) {
+                view.addView(CollectionView(context, model.stories, fm, context.getString(R.string.collection_item_stories_title)))
+            }
+            if (model?.events?.items.size != 0) {
+                view.addView(CollectionView(context, model.events, fm, context.getString(R.string.collection_item_events_title)))
+            }
+
+        }
+
+
     }
 
-    class CollectionItemViewModel(val context: Context, var model: Model.CollectionItem) {
+    class CollectionItemViewModel(val context: Context, var model: Model.CollectionItem, var title: String) {
 
     }
 
     class MarvelItemViewModel(val context: Context, var model: Model.Item) {
+
+        lateinit var service: MarvelService
+        lateinit var detailModel: Model.Detail
+
+        init { service = MarvelService.create() }
+
         companion object {
             fun putBundleArgs(model: Model.Item): Bundle {
                 val args = Bundle()
@@ -211,6 +237,46 @@ object ViewModel {
                 return Gson().fromJson<Model.Item>(args.getString(DetailActivity.MODEL_EXTRA), itemType)
             }
         }
+
+        private var _compoSub = CompositeSubscription()
+        private val compoSub: CompositeSubscription
+            get() {
+                if (_compoSub.isUnsubscribed) {
+                    _compoSub = CompositeSubscription()
+                }
+                return _compoSub
+            }
+
+        protected final fun manageSub(s: Subscription) = compoSub.add(s)
+
+        fun unsubscribe() { compoSub.unsubscribe() }
+
+        fun imageUrl(): String = detailModel.images[0].path+"/portrait_medium."+detailModel.images[0].extension
+
+        interface DetailFragmentViewModel { fun endCallProgress(any: Any?) }
+
+        fun loadDetail(callback: DetailFragmentViewModel, resourceURI: String) {
+
+            var url = resourceURI.replace(MarvelService.BASE_URL+MarvelService.API_URL, "")
+            var splittedURI = url.split("/")
+
+            val timestamp = Date().time;
+            val hash = Utils.md5(timestamp.toString()+BuildConfig.MARVEL_PRIVATE_KEY+BuildConfig.MARVEL_PUBLIC_KEY)
+
+            manageSub(
+                    service.getDetail(splittedURI[0], splittedURI[1], timestamp.toString(), BuildConfig.MARVEL_PUBLIC_KEY, hash)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe( { c -> callback.endCallProgress(c)},
+                                    { e -> callback.endCallProgress(e)
+                                        Log.e(CollectionItemFragment::class.java.simpleName, e.message)})
+            )
+
+        }
+
+
+
+
     }
 
 }
